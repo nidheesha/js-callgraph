@@ -408,6 +408,10 @@ Relevant docs:
 */
 function collectExportsImports(ast, expFuncs, impFuncs) {
     for (let i = 0; i < ast.programs.length; i++) {
+        if(ast.programs[i] == null){
+            continue;
+        }
+
         let fname = ast.programs[i].attr.filename;
 
         astutil.visit(ast.programs[i], function (nd) {

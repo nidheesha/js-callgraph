@@ -139,6 +139,8 @@ define(function (require, exports) {
         }
         if (args.time) console.time("parsing  ");
         var ast = astutil.astFromFiles(files);
+        //console.log("ast")
+        //console.log(ast)
         if (args.time) console.timeEnd("parsing  ");
 
         if (args.time) console.time("bindings ");
@@ -179,6 +181,7 @@ define(function (require, exports) {
                 if (!filename.endsWith(".json")) {
                     filename += ".json";
                 }
+                console.log("writing")
                 fs.writeFile(filename, JSON.stringify(result, null, 2), function (err) {
                     if (err) {
                         /*
@@ -200,13 +203,17 @@ define(function (require, exports) {
 
     exports.setFiles = function (inputList) {
         let filelist = [];
+        //console.log(inputList)
+        //console.log("printed")
         inputList.forEach(function (file) {
             file = path.resolve(file);
             if (!fs.existsSync(file)) {
                 console.warn('The path "' + file + '" does not exists.');
             }
             else if (fs.statSync(file).isDirectory()) {
+                //console.log("isdirec")
                 filelist = utils.collectFiles(file, filelist);
+                //console.log(filelist)
             }
             else if (file.endsWith(".js") || file.endsWith(".ts") || file.endsWith(".vue")) {
                 filelist.push(file);
